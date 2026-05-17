@@ -1,5 +1,28 @@
 """Simulation utilities for the TENG tactile array project."""
 
+from simulation.array_generator import (
+    ArraySample,
+    cell_coordinates,
+    gaussian_pressure_map,
+    generate_array_sample,
+    sample_random_array,
+)
+from simulation.baseline_features import (
+    BaselineModel,
+    BaselineResult,
+    evaluate_baseline,
+    extract_handcrafted_features,
+    fit_baseline,
+    predict_force,
+    predict_material,
+    select_baseline,
+)
+from simulation.dataset_generator import (
+    DatasetSplit,
+    generate_dataset_split,
+    load_dataset_split,
+    save_dataset_split,
+)
 from simulation.material_params import (
     DEFAULT_ARRAY_CONFIG,
     MATERIAL_CONFIGS,
@@ -11,15 +34,64 @@ from simulation.material_params import (
     material_labels,
     validate_material_configs,
 )
+from simulation.perturbations import (
+    PerturbationConfig,
+    add_awgn,
+    add_baseline_drift,
+    apply_channel_gain,
+    apply_faulty_channels,
+    apply_neighbor_crosstalk,
+    apply_perturbations,
+)
+from simulation.teng_unit import (
+    UnitWaveformParams,
+    contact_separation_waveform,
+    deterministic_unit_params,
+    generate_unit_waveform,
+    pressure_saturation,
+    sample_unit_params,
+    time_axis,
+)
 
 __all__ = [
+    "ArraySample",
     "ArrayConfig",
+    "BaselineModel",
+    "BaselineResult",
     "DEFAULT_ARRAY_CONFIG",
+    "DatasetSplit",
     "MATERIAL_CONFIGS",
     "MaterialConfig",
+    "PerturbationConfig",
+    "UnitWaveformParams",
+    "add_awgn",
+    "add_baseline_drift",
+    "apply_channel_gain",
+    "apply_faulty_channels",
+    "apply_neighbor_crosstalk",
+    "apply_perturbations",
+    "cell_coordinates",
+    "contact_separation_waveform",
+    "deterministic_unit_params",
+    "evaluate_baseline",
+    "extract_handcrafted_features",
+    "fit_baseline",
+    "gaussian_pressure_map",
+    "generate_array_sample",
+    "generate_dataset_split",
+    "generate_unit_waveform",
     "get_material_config",
     "material_index_map",
     "material_keys",
     "material_labels",
+    "pressure_saturation",
+    "predict_force",
+    "predict_material",
+    "select_baseline",
+    "sample_random_array",
+    "sample_unit_params",
+    "load_dataset_split",
+    "save_dataset_split",
+    "time_axis",
     "validate_material_configs",
 ]
