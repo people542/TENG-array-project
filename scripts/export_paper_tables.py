@@ -22,6 +22,7 @@ def main() -> None:
         export_default_model_table(),
         export_generalization_table(),
         export_robustness_summary_table(args.robustness_csv, args.robustness_title),
+        export_structural_ablation_table(),
     ]
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n\n".join(sections) + "\n", encoding="utf-8")
@@ -100,6 +101,27 @@ def export_robustness_summary_table(path: Path, title: str) -> str:
         lines.append(
             f"| {row['split']} | {float(row['material_acc']):.4f} | {float(row['force_mae']):.4f} | "
             f"{float(row['position_mae_mm']):.4f} | {float(row['radius_mae_mm']):.4f} |"
+        )
+    return "\n".join(lines)
+
+
+def export_structural_ablation_table() -> str:
+    rows = [
+        row
+        for row in read_csv(Path("results/ablation_structural_v1.csv"))
+        if row["split"] == "test_random"
+    ]
+    lines = [
+        "## Structural Ablation on v2 Augmented Data",
+        "",
+        "| variant | material acc | force MAE (N) | position MAE (mm) | radius MAE (mm) |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    for row in rows:
+        lines.append(
+            f"| {row['variant']} | {float(row['material_acc']):.4f} | "
+            f"{float(row['force_mae']):.4f} | {float(row['position_mae_mm']):.4f} | "
+            f"{float(row['radius_mae_mm']):.4f} |"
         )
     return "\n".join(lines)
 

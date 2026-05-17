@@ -37,7 +37,8 @@ def main() -> None:
         mean=np.asarray(checkpoint["target_mean"], dtype=np.float32),
         std=np.asarray(checkpoint["target_std"], dtype=np.float32),
     )
-    model = TENGMultiTaskNet(material_classes=6)
+    variant = checkpoint.get("model_variant", checkpoint.get("args", {}).get("model_variant", "full"))
+    model = TENGMultiTaskNet(material_classes=6, variant=variant)
     model.load_state_dict(checkpoint["model_state_dict"])
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)

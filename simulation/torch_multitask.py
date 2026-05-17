@@ -58,8 +58,11 @@ class TENGDataset(Dataset):
 class TENGMultiTaskNet(nn.Module):
     """Compact spatial-temporal network for material and regression tasks."""
 
-    def __init__(self, material_classes: int = 6) -> None:
+    def __init__(self, material_classes: int = 6, variant: str = "full") -> None:
         super().__init__()
+        if variant not in {"full", "no_temporal", "no_spatial"}:
+            raise ValueError(f"Unknown model variant {variant!r}.")
+        self.variant = variant
         self.spatial = nn.Sequential(
             nn.Conv2d(5, 24, kernel_size=3, padding=1),
             nn.BatchNorm2d(24),
@@ -82,8 +85,13 @@ class TENGMultiTaskNet(nn.Module):
             nn.AdaptiveAvgPool1d(1),
             nn.Flatten(),
         )
+        shared_input_dim = {
+            "full": 128,
+            "no_temporal": 96,
+            "no_spatial": 32,
+        }[variant]
         self.shared = nn.Sequential(
-            nn.Linear(128, 128),
+            nn.Linear(shared_input_dim, 128),
             nn.ReLU(),
             nn.Dropout(0.15),
         )
@@ -91,10 +99,15 @@ class TENGMultiTaskNet(nn.Module):
         self.regression_head = nn.Linear(128, 4)
 
     def forward(self, signal: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        spatial_input = spatial_summary(signal)
-        temporal_input = representative_waveform(signal).unsqueeze(1)
-        features = torch.cat([self.spatial(spatial_input), self.temporal(temporal_input)], dim=1)
-        shared = self.shared(features)
+        features = []
+        if self.variant != "no_spatial":
+            spatial_input = spatial_summary(signal)
+            features.append(self.spatial(spatial_input))
+        if self.variant != "no_temporal":
+            temporal_input = representative_waveform(signal).unsqueeze(1)
+            features.append(self.temporal(temporal_input))
+        combined = torch.cat(features, dim=1)
+        shared = self.shared(combined)
         return self.material_head(shared), self.regression_head(shared)
 
 

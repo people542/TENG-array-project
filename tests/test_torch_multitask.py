@@ -8,13 +8,18 @@ from simulation.torch_multitask import TENGDataset, TENGMultiTaskNet, TargetScal
 
 class TestTorchMultitask(unittest.TestCase):
     def test_model_forward_shapes(self) -> None:
-        model = TENGMultiTaskNet(material_classes=6)
         signal = torch.rand(4, 8, 8, 200)
 
-        material_logits, regression = model(signal)
+        for variant in ("full", "no_temporal", "no_spatial"):
+            model = TENGMultiTaskNet(material_classes=6, variant=variant)
+            material_logits, regression = model(signal)
 
-        self.assertEqual(material_logits.shape, (4, 6))
-        self.assertEqual(regression.shape, (4, 4))
+            self.assertEqual(material_logits.shape, (4, 6))
+            self.assertEqual(regression.shape, (4, 4))
+
+    def test_model_rejects_unknown_variant(self) -> None:
+        with self.assertRaises(ValueError):
+            TENGMultiTaskNet(material_classes=6, variant="bad")
 
     def test_dataset_outputs(self) -> None:
         split = generate_dataset_split(6, rng=123, stochastic_waveform=False)

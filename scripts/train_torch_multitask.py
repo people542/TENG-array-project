@@ -36,6 +36,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--high-force-threshold", type=float, default=20.0)
     parser.add_argument("--high-force-loss-weight", type=float, default=1.0)
     parser.add_argument("--seed", type=int, default=20260517)
+    parser.add_argument("--model-variant", choices=["full", "no_temporal", "no_spatial"], default="full")
     parser.add_argument("--model-out", type=Path, default=Path("checkpoints/torch_multitask_best.pt"))
     parser.add_argument("--metrics-out", type=Path, default=Path("results/torch_multitask_metrics.json"))
     return parser.parse_args()
@@ -60,7 +61,7 @@ def main() -> None:
     test_loader = DataLoader(TENGDataset(test_split, scaler), batch_size=args.batch_size)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = TENGMultiTaskNet(material_classes=6).to(device)
+    model = TENGMultiTaskNet(material_classes=6, variant=args.model_variant).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     ce_loss = nn.CrossEntropyLoss()
     mse_loss = nn.MSELoss()
@@ -239,6 +240,7 @@ def save_checkpoint(
             "best_epoch": best_epoch,
             "best_val_score": best_val_score,
             "args": vars(args),
+            "model_variant": args.model_variant,
         },
         path,
     )
