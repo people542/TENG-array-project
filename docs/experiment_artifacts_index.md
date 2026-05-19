@@ -42,6 +42,7 @@ This file maps generated artifacts to their intended paper/report usage. Generat
 | Artifact | Purpose |
 |---|---|
 | `results/paper_tables.md` | Paper-ready Markdown tables for default, generalization, v2 robustness, and structural ablation results. |
+| `results/paper_tables.tex` | Paper-ready LaTeX tables for default, selected generalization, v2 robustness, and structural ablation results. |
 | `results/generalization_model_comparison_v1_v5.csv` | Long-form v1-v5 generalization comparison. |
 | `results/generalization_v1.csv` | v1 generalization results. |
 | `results/generalization_v2_augmented.csv` | v2 generalization results. |
@@ -93,5 +94,4 @@ The simulation experiment suite is complete enough for a thesis/paper draft:
 ## 8. Remaining Non-Experiment Work
 
 1. Write the method and experiment sections using the selected v2/v3/v4 narrative.
-2. Convert Markdown tables to LaTeX tables if the target venue requires it.
-3. Discuss limitations: material recognition is moderate, high-pressure absolute force estimation is still difficult, and radius estimation degrades under low SNR and strong drift.
+2. Discuss limitations: material recognition is moderate, high-pressure absolute force estimation is still difficult, and radius estimation degrades under low SNR and strong drift.
