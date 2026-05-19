@@ -93,5 +93,12 @@ The simulation experiment suite is complete enough for a thesis/paper draft:
 
 ## 8. Remaining Non-Experiment Work
 
-1. Write the method and experiment sections using the selected v2/v3/v4 narrative.
+1. Continue polishing `docs/paper_main_draft.md` for the target thesis or journal format.
 2. Discuss limitations: material recognition is moderate, high-pressure absolute force estimation is still difficult, and radius estimation degrades under low SNR and strong drift.
+
+## 9. Paper Drafts
+
+| Artifact | Purpose |
+|---|---|
+| `docs/paper_method_experiment_draft.md` | Method and experiment scaffold with key results. |
+| `docs/paper_main_draft.md` | More formal paper-style draft with abstract, introduction, method, experiments, training decision, limitations, and figure/table list. |
