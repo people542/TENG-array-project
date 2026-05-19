@@ -12,6 +12,7 @@ This file maps generated artifacts to their intended paper/report usage. Generat
 | `figures/generated/demo_material_waveforms.png` | Separate material waveform demo. | Supplement or debugging |
 | `figures/generated/demo_force_waveforms.png` | Separate pressure waveform demo. | Supplement or debugging |
 | `figures/generated/demo_peak_heatmaps.png` | Separate position heatmap demo. | Supplement or debugging |
+| `figures/generated/paper/model_architecture.png` | Spatial-temporal multi-task network architecture diagram. | Method / model architecture figure |
 
 ## 2. Dataset Artifacts
 
@@ -61,6 +62,7 @@ This file maps generated artifacts to their intended paper/report usage. Generat
 | `figures/generated/robustness/*.png` | Historical v1 robustness curves. |
 | `figures/generated/model_comparison/*.png` | v1-v5 comparison figures for each generalization split. |
 | `figures/generated/ablation/structural_ablation.png` | Structural ablation figure for architecture justification. |
+| `figures/generated/paper/model_architecture.png` | Paper-ready diagram of the spatial branch, temporal branch, shared MLP, and output heads. |
 
 ## 6. Current Recommended Narrative
 
@@ -92,5 +94,4 @@ The simulation experiment suite is complete enough for a thesis/paper draft:
 
 1. Write the method and experiment sections using the selected v2/v3/v4 narrative.
 2. Convert Markdown tables to LaTeX tables if the target venue requires it.
-3. Add a clean model architecture diagram for the dual-branch network.
-4. Discuss limitations: material recognition is moderate, high-pressure absolute force estimation is still difficult, and radius estimation degrades under low SNR and strong drift.
+3. Discuss limitations: material recognition is moderate, high-pressure absolute force estimation is still difficult, and radius estimation degrades under low SNR and strong drift.
